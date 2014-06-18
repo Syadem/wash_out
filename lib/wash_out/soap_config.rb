@@ -8,6 +8,7 @@ module WashOut
       parser: :rexml,
       namespace: 'urn:WashOut',
       wsdl_style: 'rpc',
+      wrap: true,
       snakecase_input: false,
       camelize_wsdl: false,
       catch_xml_errors: false,

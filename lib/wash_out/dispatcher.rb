@@ -38,8 +38,10 @@ module WashOut
 
       xml_data = env['wash_out.soap_data'].values_at(:envelope, :Envelope).compact.first
       xml_data = xml_data.values_at(:body, :Body).compact.first
-      xml_data = xml_data.values_at(soap_action.underscore.to_sym,
-                                    soap_action.to_sym).compact.first || {}
+      if soap_config.wrap
+        xml_data = xml_data.values_at(soap_action.underscore.to_sym,
+                                      soap_action.to_sym).compact.first || {}
+      end
 
       strip_empty_nodes = lambda{|hash|
         hash.keys.each do |key|
@@ -86,6 +88,7 @@ module WashOut
     # Render a SOAP response.
     def _render_soap(result, options)
       @namespace   = soap_config.namespace
+      @wrap        = soap_config.wrap
       @operation   = soap_action = request.env['wash_out.soap_action']
       @action_spec = self.class.soap_actions[soap_action]
 
