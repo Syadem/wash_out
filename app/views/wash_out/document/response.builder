@@ -10,8 +10,6 @@ xml.tag! "soap:Envelope", "xmlns:soap" => 'http://schemas.xmlsoap.org/soap/envel
     end
   end
   xml.tag! "soap:Body" do
-    xml.tag! "tns:#{@action_spec[:response_tag]}" do
-      wsdl_data xml, result
-    end
+    wsdl_data xml, result
   end
 end
